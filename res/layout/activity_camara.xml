@@ -12,14 +12,6 @@
         android:orientation="vertical" >
     </RadioGroup>
 
-    <ImageView
-        android:id="@+id/iwPreview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnCapturar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="82dp"
-        android:src="@drawable/ic_launcher" android:contentDescription="@String/imgPreview"/>
 
     <RadioGroup
         android:id="@+id/radioGroup2"
@@ -50,5 +42,13 @@
         android:layout_below="@+id/radioGroup2"
         android:layout_marginTop="42dp"
         android:text="@string/btnCapturar" />
+
+    <ImageView
+        android:id="@+id/imgPreview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/radioGroup1"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_launcher" android:contentDescription="@string/imgPreview"/>
 
 </RelativeLayout>
