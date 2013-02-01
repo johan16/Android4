@@ -42,15 +42,23 @@ public class CamaraActivity extends Activity {
 				Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 				int code = TOMAR_FOTO;
 				
-				//si el usuario selecciona la camara
+				//SI EL USUARIO SELECCIONA LA CAMARA
 				if(rbtnFoto.isChecked()){
 					//Lanzar la camara
 					Uri output = Uri.fromFile(new File(foto));
 					//aki se va crear la imagen
 					i.putExtra(MediaStore.EXTRA_OUTPUT, output);
-				}else if(rbtnGaleria.isChecked()){
-					
+				
+				}//SI EL USUARIO SELECCIONA LA GALERIA
+				else if(rbtnGaleria.isChecked()){
+					//tomar desde la galaeria
+					i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+					code = SELECCIONAR_FOTO;
 				}
+				
+				//EJECUTAR ACTIVITY CUANDO USUARIO REALICE ACCION
+				//(intent , y el codigo de la accion)
+				startActivityForResult(i, code);
 				
 			}
 			
