@@ -14,7 +14,7 @@
 
 
     <RadioGroup
-        android:id="@+id/radioGroup2"
+        android:id="@+id/rdGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -34,15 +34,6 @@
             android:text="@string/btnGaleria" />
     </RadioGroup>
 
-    <Button
-        android:id="@+id/btnCapturar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/radioGroup2"
-        android:layout_marginTop="42dp"
-        android:text="@string/btnCapturar" />
-
     <ImageView
         android:id="@+id/imgPreview"
         android:layout_width="match_parent"
@@ -51,5 +42,14 @@
         android:layout_marginTop="36dp"
         android:contentDescription="@string/imgPreview"
         android:src="@drawable/ic_launcher" />
+
+    <Button
+        android:id="@+id/btnCapturar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/rdGroup"
+        android:layout_marginTop="22dp"
+        android:text="@string/btnCapturar" />
 
 </RelativeLayout>
