@@ -1,20 +1,30 @@
 package com.example.proyectofotos;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.InputStream;
+import java.util.Calendar;
 
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.media.MediaScannerConnection;
+import android.media.MediaScannerConnection.MediaScannerConnectionClient;
 
 public class CamaraActivity extends Activity {
 	
@@ -28,14 +38,20 @@ public class CamaraActivity extends Activity {
 		setContentView(R.layout.activity_camara);
 		
 		//asignar nombre a foto
-		foto = Environment.getExternalStorageDirectory() + "/test.jpg";
+		Calendar cal = Calendar.getInstance();
+		int annio = cal.get(Calendar.YEAR);
+		int segundo = cal.get(Calendar.SECOND);
+		
+		//pendiente para agregar nombre de archivo
+		
+		foto = Environment.getExternalStorageDirectory() + "/"+annio+segundo+".jpg";
 		
 		//Mapear los elementos
 		final RadioGroup rbGroup =  (RadioGroup) this.findViewById(R.id.rbGroup);
 		final RadioButton rbtnFoto = (RadioButton) this.findViewById(R.id.btnFoto);
 		final RadioButton rbtnGaleria = (RadioButton) this.findViewById(R.id.btnGaleria);
 		
-		//Button btnCapturar = (Button) this.findViewById(R.id.btnCapturar);
+		Button btnCapturar = (Button) this.findViewById(R.id.btnCapturar);
 		
 		
 		rbGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -65,7 +81,9 @@ public class CamaraActivity extends Activity {
 						
 		            }
 		});
-		/*
+		
+		
+		
 		btnCapturar.setOnClickListener(new OnClickListener(){
 
 			@Override
@@ -95,7 +113,7 @@ public class CamaraActivity extends Activity {
 			}
 			
 		});
-		*/
+	
 	}
 
 	@Override
@@ -104,5 +122,75 @@ public class CamaraActivity extends Activity {
 		getMenuInflater().inflate(R.menu.activity_camara, menu);
 		return true;
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+		
+		//PROCESO PARA TOMAR UNA FOTO
+		if(requestCode == TOMAR_FOTO){
+			//saber si los datos son integros
+			if(data != null){
+				//si el archivo es una imagen
+				if(data.hasExtra("data")){
+					//mapear image view
+					ImageView imgPreview = (ImageView) this.findViewById(R.id.imgPreview);
+					//cargar preview
+					//( asignar la foto)
+					imgPreview.setImageBitmap((Bitmap) data.getParcelableExtra("data"));
+				}
+			}
+			// data null
+			else{
+				//mapear image view
+				ImageView imgPreview = (ImageView) this.findViewById(R.id.imgPreview);
+				//obtener la imagen desde ruta especifica
+				imgPreview.setImageBitmap(BitmapFactory.decodeFile(foto));
+				
+				//obtener foto desde la camara
+				new MediaScannerConnectionClient(){
+					private MediaScannerConnection msc = null;
+					{
+						
+						msc = new MediaScannerConnection( getApplicationContext(), this);
+						msc.connect();
+					}
+					@Override
+					public void onMediaScannerConnected() {
+						// TODO Auto-generated method stub
+						msc.scanFile(foto, null);
+					}
+
+					@Override
+					public void onScanCompleted(String path, Uri uri) {
+						// TODO Auto-generated method stub
+						msc.disconnect();
+					}
+					
+				};
+			}
+		}
+		else if(requestCode == SELECCIONAR_FOTO){
+			Uri imagen = data.getData();
+			//carga la foto x fluta
+			InputStream is;
+			try{
+				is = getContentResolver().openInputStream(imagen);
+				BufferedInputStream bis = new BufferedInputStream(is);
+				Bitmap bitmap = BitmapFactory.decodeStream(bis);
+				//mapear image view
+				ImageView imgPreview = (ImageView) this.findViewById(R.id.imgPreview);
+				
+				imgPreview.setImageBitmap(bitmap);
+				
+			}catch(Exception ex){
+				//mostrar mensaje de error;
+	
+
+			};
+		}
+
+	}
+
+
 
 }
