@@ -45,10 +45,11 @@
 
     <ImageView
         android:id="@+id/imgPreview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/radioGroup1"
-        android:layout_centerVertical="true"
-        android:src="@drawable/ic_launcher" android:contentDescription="@string/imgPreview"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/btnCapturar"
+        android:layout_marginTop="36dp"
+        android:contentDescription="@string/imgPreview"
+        android:src="@drawable/ic_launcher" />
 
 </RelativeLayout>
