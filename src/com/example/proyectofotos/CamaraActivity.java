@@ -31,11 +31,11 @@ public class CamaraActivity extends Activity {
 		foto = Environment.getExternalStorageDirectory() + "/test.jpg";
 		
 		//Mapear los elementos
-		final RadioGroup rbGroup =  (RadioGroup) this.findViewById(R.id.rdGroup);
+		final RadioGroup rbGroup =  (RadioGroup) this.findViewById(R.id.rbGroup);
 		final RadioButton rbtnFoto = (RadioButton) this.findViewById(R.id.btnFoto);
 		final RadioButton rbtnGaleria = (RadioButton) this.findViewById(R.id.btnGaleria);
 		
-		Button btnCapturar = (Button) this.findViewById(R.id.btnCapturar);
+		//Button btnCapturar = (Button) this.findViewById(R.id.btnCapturar);
 		
 		
 		rbGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
